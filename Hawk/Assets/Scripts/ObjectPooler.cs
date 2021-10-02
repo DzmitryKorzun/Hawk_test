@@ -12,7 +12,7 @@ public class ObjectPooler : MonoBehaviour
 {
 
     public static ObjectPooler objectPooler;
-
+    GameObject container; 
 
     [Serializable]
     public class PrefabData
@@ -24,9 +24,13 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField] private List<PrefabData> prefabDatas = null;
     private Dictionary<TypeObj, GameObject> prefabs = new Dictionary<TypeObj, GameObject>();
     private Dictionary<TypeObj, Queue<GameObject>> pools = new Dictionary<TypeObj, Queue<GameObject>>();
-
+    private List<GameObject> parentObj;
     private void Awake()
     {
+
+        //  TypeObj typeObj = new TypeObj();
+        string[] tempEnumArray = Enum.GetNames(typeof(TypeObj)); //превратим ваш enum в массив строк
+        int enumLen = tempEnumArray.Length; // а вот теперь получим количество
         objectPooler = this;
         foreach (PrefabData prefabData in prefabDatas)
         {
@@ -34,6 +38,13 @@ public class ObjectPooler : MonoBehaviour
             pools.Add(prefabData.name, new Queue<GameObject>());
         }
         prefabDatas = null;
+        Debug.Log(enumLen);
+        for (int i = 0; i < enumLen; i++)
+        {
+            //container = new GameObject();
+            parentObj.Add(Instantiate(container, this.transform));
+            parentObj[i].name = tempEnumArray[i];
+        }
     }
 
     public GameObject GetObject(TypeObj poolName)
@@ -42,7 +53,6 @@ public class ObjectPooler : MonoBehaviour
         {
             return pools[poolName].Dequeue();
         }
-
         return Instantiate(prefabs[poolName]);
     }
 

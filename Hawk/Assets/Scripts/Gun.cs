@@ -13,7 +13,7 @@ public class Gun : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Fire(ObjectPooler.objectPooler.GetObject(TypeObj.bullet_type1).GetComponent<RedBullet>());
+      //  Fire(ObjectPooler.objectPooler.GetObject(TypeObj.bullet_type1).GetComponent<RedBullet>());
     }
 
     private void Fire(IBullet bullet)
