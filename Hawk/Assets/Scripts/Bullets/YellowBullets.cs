@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RedBullet : Bullet, IBullet
+public class YellowBullets : Bullet, IBullet
 {
     private Transform bulletTransform;
 
@@ -24,9 +22,8 @@ public class RedBullet : Bullet, IBullet
     private void OnBecameInvisible()
     {
         gameObject.SetActive(false);
-        ObjectPooler.objectPooler.ReturnObject(TypeObj.bullet_type1, gameObject);
+        ObjectPooler.objectPooler.ReturnObject(TypeObj.bullet_type2, gameObject);
     }
-
     private void FixedUpdate()
     {
         BulletMovement();

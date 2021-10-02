@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -8,12 +7,12 @@ public class Gun : MonoBehaviour
     private int numberOfBulletTypes;
     void Start()
     {
-       // numberOfBulletTypes = bullets.Length;
+
     }
 
     private void FixedUpdate()
     {
-       if (Input.GetKey(KeyCode.F)) Fire(ObjectPooler.objectPooler.GetObject(TypeObj.bullet_type1).GetComponent<RedBullet>());
+        Fire(ObjectPooler.objectPooler.GetObject(SelectionRandomBullets()).GetComponent<IBullet>());
     }
 
     private void Fire(IBullet bullet)
@@ -21,9 +20,13 @@ public class Gun : MonoBehaviour
         bullet.bulletSetting(this.transform);
     }
 
-    //private IBullet SelectionRandomBullets()
-    //{
-    //    Random.Range
-    //}
+    private TypeObj SelectionRandomBullets()
+    {
+        Type type = typeof(TypeObj);
+        Array values = type.GetEnumValues();  
+        int index = UnityEngine.Random.Range(0, values.Length);
+        TypeObj value = (TypeObj)values.GetValue(index);
+        return value;
+    }
 
 }
