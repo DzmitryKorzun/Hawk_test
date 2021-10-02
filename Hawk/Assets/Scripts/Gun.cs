@@ -8,17 +8,17 @@ public class Gun : MonoBehaviour
     private int numberOfBulletTypes;
     void Start()
     {
-        numberOfBulletTypes = bullets.Length;
+       // numberOfBulletTypes = bullets.Length;
     }
 
     private void FixedUpdate()
     {
-      //  Fire(ObjectPooler.objectPooler.GetObject(TypeObj.bullet_type1).GetComponent<RedBullet>());
+       if (Input.GetKey(KeyCode.F)) Fire(ObjectPooler.objectPooler.GetObject(TypeObj.bullet_type1).GetComponent<RedBullet>());
     }
 
     private void Fire(IBullet bullet)
     {
-        bullet.bulletSetting(transform);
+        bullet.bulletSetting(this.transform);
     }
 
     //private IBullet SelectionRandomBullets()

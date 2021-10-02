@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class RedBullet : Bullet, IBullet
 {
-    private Transform bulletStartPosition;
+    private Transform bulletTransform;
 
+    private void Awake()
+    {
+        bulletTransform = this.transform;
+    }
     public void BulletMovement()
     {
         transform.Translate(Vector2.up * speed);
     }
 
-    public void bulletSetting(Transform startPos)
+    public void bulletSetting(Transform startTransform)
     {
-        bulletStartPosition = startPos;
+        bulletTransform.position = startTransform.position;
+        this.gameObject.SetActive(true);
     }
 
     private void OnBecameInvisible()
