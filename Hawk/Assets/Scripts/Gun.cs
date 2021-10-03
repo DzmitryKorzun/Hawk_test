@@ -1,13 +1,16 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
     [SerializeField] private IBullet[] bullets;
-    private int numberOfBulletTypes;
+    private Type type;
+    private Array values;
     void Start()
     {
-
+        type = typeof(TypeObj);
+        values = type.GetEnumValues();
     }
 
     private void FixedUpdate()
@@ -22,8 +25,6 @@ public class Gun : MonoBehaviour
 
     private TypeObj SelectionRandomBullets()
     {
-        Type type = typeof(TypeObj);
-        Array values = type.GetEnumValues();  
         int index = UnityEngine.Random.Range(0, values.Length);
         TypeObj value = (TypeObj)values.GetValue(index);
         return value;

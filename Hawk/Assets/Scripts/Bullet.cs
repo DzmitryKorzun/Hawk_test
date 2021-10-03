@@ -11,4 +11,15 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] protected float damage;
     [SerializeField] protected float speed;
+
+    public float ReturnBulletDamage()
+    {
+        return damage;
+    }
+
+    public virtual void BulletMovement()
+    {
+        transform.Translate(Vector2.up * speed);
+    }
+
 }
