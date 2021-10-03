@@ -8,11 +8,13 @@ public enum TypeObj
     bullet_type1,
     bullet_type2
 }
+
+
 public class ObjectPooler : MonoBehaviour
 {
 
     public static ObjectPooler objectPooler;
-    GameObject container; 
+
 
     [Serializable]
     public class PrefabData
@@ -23,12 +25,11 @@ public class ObjectPooler : MonoBehaviour
 
     [SerializeField] private List<PrefabData> prefabDatas = null;
     private Dictionary<TypeObj, GameObject> prefabs = new Dictionary<TypeObj, GameObject>();
+   // private List<Transform> containers = new List<Transform>();
     [SerializeField] private Dictionary<TypeObj, Queue<GameObject>> pools = new Dictionary<TypeObj, Queue<GameObject>>();
-    private List<GameObject> parentObj;
+    [SerializeField] private List<GameObject> parentObj;
     private void Awake()
     {
-
-        //  TypeObj typeObj = new TypeObj();
         string[] tempEnumArray = Enum.GetNames(typeof(TypeObj));
         int enumLen = tempEnumArray.Length;
         objectPooler = this;
@@ -40,9 +41,7 @@ public class ObjectPooler : MonoBehaviour
         prefabDatas = null;
         for (int i = 0; i < enumLen; i++)
         {
-            //container = new GameObject();
-            parentObj.Add(Instantiate(container, this.transform));
-            parentObj[i].name = tempEnumArray[i];
+            parentObj.Add(Instantiate(new GameObject(tempEnumArray[i]), this.transform));
         }
     }
 
@@ -52,7 +51,13 @@ public class ObjectPooler : MonoBehaviour
         {
             return pools[poolName].Dequeue(); 
         }
-        return Instantiate(prefabs[poolName]);
+        return GenerateNewObject(poolName);
+    }
+
+    private GameObject GenerateNewObject(TypeObj poolName)
+    {
+        int objID = (int)poolName;
+        return Instantiate(prefabs[poolName], parentObj[objID].transform);
     }
 
     public void ReturnObject(TypeObj poolName, GameObject poolObject)
