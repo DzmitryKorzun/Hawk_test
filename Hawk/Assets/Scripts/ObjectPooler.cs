@@ -6,7 +6,7 @@ using UnityEngine;
 public enum TypeObj
 {
     bullet_type1,
-    bullet_type2
+    bullet_type2,
 }
 
 
@@ -18,7 +18,7 @@ public class ObjectPooler : MonoBehaviour
         public TypeObj name;
         public GameObject prefab;
     }
-
+    
     [SerializeField] private List<PrefabData> prefabDatas = null;
     [SerializeField] private Dictionary<TypeObj, Queue<GameObject>> pools = new Dictionary<TypeObj, Queue<GameObject>>();
     [SerializeField] private List<GameObject> parentObj;
@@ -36,7 +36,6 @@ public class ObjectPooler : MonoBehaviour
             prefabs.Add(prefabData.name, prefabData.prefab);
             pools.Add(prefabData.name, new Queue<GameObject>());
         }
-        prefabDatas = null;
         for (int i = 0; i < enumLen; i++)
         {
             parentObj.Add(Instantiate(containerRef, this.transform));
@@ -56,6 +55,22 @@ public class ObjectPooler : MonoBehaviour
     public void ReturnObject(TypeObj poolName, GameObject poolObject)
     {
         pools[poolName].Enqueue(poolObject);
+    }
+
+    public List<int> gettingValidateEnum<T>()
+    {
+        List<int> validateDate = new List<int>();
+
+        int i = 0;
+        foreach (PrefabData item in prefabDatas)
+        {
+            if (item.prefab.GetComponent<T>() != null)
+            {
+                validateDate.Add(i);
+            }
+            i++;
+        }
+        return validateDate;
     }
 
     private GameObject GenerateNewObject(TypeObj poolName)

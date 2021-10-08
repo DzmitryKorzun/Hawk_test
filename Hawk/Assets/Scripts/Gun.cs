@@ -1,33 +1,57 @@
-using System;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] private IBullet[] bullets;
-    private Type type;
-    private Array values;
+    [SerializeField] private List<GameObject> bullets = new List<GameObject>();
+    [SerializeField] private Queue<GameObject> queueOfBullets = new Queue<GameObject>();
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private Border border;
+    private System.Random random = new System.Random();
+    private GameObject bulletContainer;
+
+    private delegate void bulletMovementDelegate(float speed);
+    bulletMovementDelegate bulletMovement;
+    private void Awake()
+    {
+
+    }
+
     void Start()
     {
-        type = typeof(TypeObj);
-        values = type.GetEnumValues();
+        border.bulletBarrierCollisionEvent += AddBulletToQueue;
+        bulletContainer = new GameObject("bulletContainer");
     }
 
     private void FixedUpdate()
     {
-        Fire(ObjectPooler.objectPooler.GetObject(SelectionRandomBullets()).GetComponent<IBullet>());
+        Fire();
+        bulletMovement(bulletSpeed);
     }
 
-    private void Fire(IBullet bullet)
+    private void Fire()
     {
-        bullet.bulletSetting(this.transform);
+        if (queueOfBullets.Count > 0)
+        {
+            queueOfBullets.Dequeue().transform.position = this.transform.position;
+        }
+        else
+        {
+            GameObject bull = Instantiate(GetRandomRefBullet());
+            bulletMovement += bull.GetComponent<Bullet>().BulletMovenent;
+            bull.transform.position = this.transform.position;
+        }
     }
 
-    private TypeObj SelectionRandomBullets()
+    private GameObject GetRandomRefBullet()
     {
-        int index = UnityEngine.Random.Range(0, values.Length);
-        TypeObj value = (TypeObj)values.GetValue(index);
-        return value;
+        int index = random.Next(bullets.Count);
+        return bullets[index];
+    }
+
+    private void AddBulletToQueue(Collider bullet)
+    {
+        queueOfBullets.Enqueue(bullet.gameObject);
     }
 
 }

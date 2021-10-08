@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PersonMovementController : MonoBehaviour
 {
     private Vector2 vectorDifference;
-
+    private Vector2 startPosition;
     private float maxY;
     private float minY;
     private float maxX;
@@ -19,21 +17,19 @@ public class PersonMovementController : MonoBehaviour
         maxY = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).y;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        for (int i = 0; i < Input.touchCount; i++)
+        if (Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            if (Input.GetTouch(i).phase == TouchPhase.Began)
-            {
-                vectorDifference = transform.position - Camera.main.ScreenToWorldPoint(Input.GetTouch(i).position);
-            }
-            if (Input.GetTouch(i).phase == TouchPhase.Moved)
-            {
-                Vector2 p = Camera.main.ScreenToWorldPoint(Input.GetTouch(i).position);
-                float posX = Mathf.Clamp((p + vectorDifference).x, minX, maxX);
-                float posY = Mathf.Clamp((p + vectorDifference).y, minY, maxY);
-                transform.position = new Vector2(posX, posY);
-            }
+            startPosition = Input.GetTouch(0).position;
         }
+        if (Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            Vector2 pos = transform.position;
+            pos = (startPosition - Input.GetTouch(0).position) * 2 * Time.deltaTime;
+            Debug.Log(pos);
+            this.gameObject.transform.position = pos;
+        }
+
     }
 }
