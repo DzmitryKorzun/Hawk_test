@@ -1,21 +1,13 @@
 using UnityEngine;
-
 public class PersonMovementController : MonoBehaviour
 {
-    private Rigidbody rb;
-    private Vector3 startPosition;
-    Vector3 worldPosition = new Vector3();
+    private Vector3 worldPosition = new Vector3();
     private float deltaX, deltaZ;
     private float distance;
     private float maxZ = 5.5f;
     private float minX = -3f;
     private float maxX = 3f;
     private float minZ = -5.5f;
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-
     private void FixedUpdate()
     {
         if (Input.touchCount > 0)
@@ -35,10 +27,11 @@ public class PersonMovementController : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     Vector3 pos = new Vector3(Mathf.Clamp(worldPosition.x - deltaX, minX, maxX), 0, Mathf.Clamp(worldPosition.z - deltaZ, minZ, maxZ));
-                    rb.MovePosition(pos);
+                    transform.position = pos;
                     break;
                 case TouchPhase.Ended:
-                    rb.velocity = Vector3.zero;
+                    deltaX = 0;
+                    deltaZ = 0;
                     break;
             }
         }
