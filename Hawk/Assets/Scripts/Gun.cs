@@ -3,22 +3,21 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> bullets = new List<GameObject>();
-    [SerializeField] private Queue<GameObject> queueOfBullets = new Queue<GameObject>();
-    [SerializeField] private float bulletSpeed;
+    [SerializeField] private List<GameObject> bullets;
+    [SerializeField] private Queue<Transform> queueOfBullets;
     [SerializeField] private Border border;
     private System.Random random = new System.Random();
     private GameObject bulletContainer;
-
+    [SerializeField] private float speedOfBullets;
+    [SerializeField] private List<Transform> guns;
     private delegate void bulletMovementDelegate(float speed);
     bulletMovementDelegate bulletMovement;
-    private void Awake()
-    {
 
-    }
+   // [HideInInspector] public sealed override float bulletSpeed { get => base.bulletSpeed; set => base.bulletSpeed = value; }
 
     void Start()
     {
+        queueOfBullets = new Queue<Transform>();
         border.bulletBarrierCollisionEvent += AddBulletToQueue;
         bulletContainer = new GameObject("bulletContainer");
     }
@@ -26,21 +25,26 @@ public class Gun : MonoBehaviour
     private void FixedUpdate()
     {
         Fire();
-        bulletMovement(bulletSpeed);
+        bulletMovement(speedOfBullets);
     }
 
     private void Fire()
     {
-        if (queueOfBullets.Count > 0)
+        foreach (var item in guns)
         {
-            queueOfBullets.Dequeue().transform.position = this.transform.position;
+            if (queueOfBullets.Count > 0)
+            {
+                var obj = this.queueOfBullets.Dequeue();
+                obj.position = item.transform.position;
+            }
+            else
+            {
+                GameObject bull = Instantiate(GetRandomRefBullet());
+                bulletMovement += bull.GetComponent<Bullet>().BulletMovenent;
+                bull.transform.position = item.position;
+            }
         }
-        else
-        {
-            GameObject bull = Instantiate(GetRandomRefBullet());
-            bulletMovement += bull.GetComponent<Bullet>().BulletMovenent;
-            bull.transform.position = this.transform.position;
-        }
+     
     }
 
     private GameObject GetRandomRefBullet()
@@ -49,9 +53,9 @@ public class Gun : MonoBehaviour
         return bullets[index];
     }
 
-    private void AddBulletToQueue(Collider bullet)
+    public void AddBulletToQueue(Collider bullet)
     {
-        queueOfBullets.Enqueue(bullet.gameObject);
+        queueOfBullets.Enqueue(bullet.transform);
     }
 
 }

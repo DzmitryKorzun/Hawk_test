@@ -2,34 +2,47 @@ using UnityEngine;
 
 public class PersonMovementController : MonoBehaviour
 {
-    private Vector2 vectorDifference;
-    private Vector2 startPosition;
-    private float maxY;
-    private float minY;
-    private float maxX;
-    private float minX;
-
+    private Rigidbody rb;
+    private Vector3 startPosition;
+    Vector3 worldPosition = new Vector3();
+    private float deltaX, deltaZ;
+    private float distance;
+    private float maxZ = 5.5f;
+    private float minX = -3f;
+    private float maxX = 3f;
+    private float minZ = -5.5f;
     private void Start()
     {
-        minX = Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
-        minY = Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).y;
-        maxX = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x;
-        maxY = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).y;
+        rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0)
         {
-            startPosition = Input.GetTouch(0).position;
+            Touch touch = Input.GetTouch(0);
+            Plane plane = new Plane(Vector3.up, 0);
+            Ray ray = Camera.main.ScreenPointToRay(touch.position);
+            if (plane.Raycast(ray, out distance))
+            {
+                worldPosition = ray.GetPoint(distance);
+            }
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    deltaX = worldPosition.x - transform.position.x;
+                    deltaZ = worldPosition.z - transform.position.z;
+                    break;
+                case TouchPhase.Moved:
+                    Vector3 pos = new Vector3(Mathf.Clamp(worldPosition.x - deltaX, minX, maxX), 0, Mathf.Clamp(worldPosition.z - deltaZ, minZ, maxZ));
+                    rb.MovePosition(pos);
+                    break;
+                case TouchPhase.Ended:
+                    rb.velocity = Vector3.zero;
+                    break;
+            }
         }
-        if (Input.GetTouch(0).phase == TouchPhase.Moved)
-        {
-            Vector2 pos = transform.position;
-            pos = (startPosition - Input.GetTouch(0).position) * 2 * Time.deltaTime;
-            Debug.Log(pos);
-            this.gameObject.transform.position = pos;
-        }
+        
 
     }
 }
