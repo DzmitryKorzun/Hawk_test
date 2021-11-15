@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Serializable] public class EnemyData
+    [Serializable] private class EnemyData
     {
         [SerializeField] private Vector3 pos;
         [SerializeField] private Enemy enemyPrefab;
@@ -17,16 +17,9 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private List<EnemyData> enemiesData;
 
-
     private List<Enemy> enemies = new List<Enemy>();
-    private GameScreen gameScreen;
 
     public List<Enemy> Enemies => enemies;
-
-    public void Setup(GameScreen gameScreen)
-    {
-        this.gameScreen = gameScreen;
-    }
 
     public void AddEnemy()
     {
@@ -34,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Enemy enemy = Instantiate(enemiesData[i].EnemyPrefab);
             enemies.Add(enemy);
-            enemies[i].Setting(enemiesData[i].Health, enemiesData[i].StartPos, gameScreen);
+            enemies[i].Setting(enemiesData[i].Health, enemiesData[i].StartPos);
         }
     }
 }

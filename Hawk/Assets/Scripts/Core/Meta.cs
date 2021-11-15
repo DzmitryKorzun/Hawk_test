@@ -7,11 +7,10 @@ namespace Core
     public class Meta : MonoBehaviour, IMeta
     {
         [SerializeField] private Character characterPrefab;
-        [SerializeField] private Collider physicalField;
+        [SerializeField] private PhysicalAreaOfThePlayingField physicalField;
         [SerializeField] private ScreenController screenController;
         [SerializeField] private GameConfig gameConfig;
         [SerializeField] private EnemySpawner enemySpawner;
-        [SerializeField] private Camera cameraUI;
 
         private Game game;
         private bool isLevelStart;
@@ -40,7 +39,7 @@ namespace Core
         {
             isLevelStart = false;
             GameScreen gameScreen = screenController.ShowGameScreen();
-            game.StartGame(gameScreen, characterPrefab, physicalField, enemySpawner, cameraUI);
+            game.StartGame(gameScreen, characterPrefab, physicalField, enemySpawner);
         }
     }
 }

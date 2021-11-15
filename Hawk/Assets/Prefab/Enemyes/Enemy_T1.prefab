@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2097533691946952229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232408404905403215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3188de8a6a115dc478072acfddaa11c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gun: {fileID: 7477734873260057228}
+  angle: 0
+  enumDirection: 1
+  isEnum: 1
 --- !u!1 &7269532858992619286
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +118,7 @@ MonoBehaviour:
   destroyEffect: {fileID: 2334606324207146814}
   guns:
   - {fileID: 7477734873260057228}
-  healthBar: {fileID: 8686370236002374540}
+  healthBar: {fileID: 6771069735138944265}
 --- !u!54 &-4444598050930610988
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -188,6 +204,10 @@ PrefabInstance:
       value: EnemyGun
       objectReference: {fileID: 0}
     - target: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
+      propertyPath: launcher
+      value: 
+      objectReference: {fileID: 2097533691946952229}
+    - target: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
       propertyPath: bulletSpeed
       value: 0.47
       objectReference: {fileID: 0}
@@ -209,6 +229,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
+--- !u!1 &6232408404905403215 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2191078925293788791, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
+  m_PrefabInstance: {fileID: 5194252084281654584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6716598504493152757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1523226029522109645, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
@@ -219,7 +244,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
   m_PrefabInstance: {fileID: 5194252084281654584}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6232408404905403215}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83ec1704f5fc3324d830e0746084ee7c, type: 3}
@@ -332,6 +357,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5206341826307032983, guid: f5feae5ede515b74391e0d2c755126f6, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5feae5ede515b74391e0d2c755126f6, type: 3}
 --- !u!224 &1312163626806164482 stripped
@@ -339,15 +368,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4773350021011641301, guid: f5feae5ede515b74391e0d2c755126f6, type: 3}
   m_PrefabInstance: {fileID: 5767955879705489367}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8686370236002374540 stripped
+--- !u!114 &6771069735138944265 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2920525968697867355, guid: f5feae5ede515b74391e0d2c755126f6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1007761078821735134, guid: f5feae5ede515b74391e0d2c755126f6, type: 3}
   m_PrefabInstance: {fileID: 5767955879705489367}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: fca274aa7403be6499f396e3f3a70c53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7674868904704060657

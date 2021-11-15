@@ -6,23 +6,25 @@ namespace Core
     public class Game : MonoBehaviour
     {
         private Character character;
-        private Collider physicalField;
+        private PhysicalAreaOfThePlayingField physicalField;
         private IMeta meta;
         private GameConfig config;
+
         public Game(IMeta iMeta, GameConfig config)
         {
             meta = iMeta;
             this.config = config;
         }
 
-        public void StartGame(GameScreen gameScreen, Character person, Collider field, EnemySpawner enemySpawner, Camera cameraUI)
+        public void StartGame(GameScreen gameScreen, Character person, PhysicalAreaOfThePlayingField field, EnemySpawner enemySpawner)
         {
             this.physicalField = Instantiate(field);
+            this.physicalField.gameObject.SetActive(false);
             this.character = Instantiate(person);
             character.gameObject.SetActive(true);
-            character.Setup(config.PersonSpeed, config.StartShipPos, config.ShipSize, config.BulletSpeed, physicalField, this, gameScreen, config.PersonHealth, cameraUI);
-            enemySpawner.Setup(gameScreen);
+            character.Setup(config.PersonSpeed, config.StartShipPos, config.ShipSize, config.BulletSpeed, this, gameScreen, config.PersonHealth);
             enemySpawner.AddEnemy();
+            physicalField.Setting(character, config);
         }
 
         public void FinishGame()

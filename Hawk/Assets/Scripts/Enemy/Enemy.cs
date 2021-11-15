@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private ParticleSystem destroyEffect;
     [SerializeField] private Gun[] guns;
-    [SerializeField] private Image healthBar;
+    [SerializeField] private HealthBarController healthBar;
 
     private float health;
     private float maxHealth;
@@ -13,7 +12,7 @@ public class Enemy : MonoBehaviour
     private void TakeDamage(float damage)
     {
         this.health = Mathf.Clamp(health - damage, 0, health);
-        healthBar.fillAmount = health / maxHealth;
+        healthBar.FillImage(health / maxHealth);
         if (health == 0)
         {
             destroyEffect.Play();
@@ -36,7 +35,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Setting(float health, Vector3 startPos, GameScreen gameScreen)
+    public void Setting(float health, Vector3 startPos)
     {
         this.health = health;
         this.maxHealth = health;

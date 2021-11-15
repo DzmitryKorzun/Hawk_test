@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     private float speed;
     private WeaponOwner bulletOwner;
     private Collider physicalField;
-    private Vector3 bulletDirection;
+    private BaseLauncher launcher;
     public float Speed 
     { 
         get
@@ -25,20 +25,19 @@ public class Bullet : MonoBehaviour
     public float Damage => damage;
     private void FixedUpdate()
     {
-        transform.Translate(bulletDirection * speed);
+        launcher.Move(this);
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.Equals(physicalField)==false) myGun.AddBulletToQueue(this.transform);
+        if (collision.Equals(physicalField) == false) myGun.AddBulletToQueue(this.transform);
     }
-
-    public void Setup(float speed, Gun gun, WeaponOwner weaponOwner, Collider physicalField, Vector3 bulletDirection)
+    public void Setup(float speed, Gun gun, WeaponOwner weaponOwner, Collider physicalField, BaseLauncher launcher)
     {
         this.speed = speed;
         this.myGun = gun;
         this.bulletOwner = weaponOwner;
         this.physicalField = physicalField;
-        this.bulletDirection = bulletDirection;
+        this.launcher = launcher;
     }
 }

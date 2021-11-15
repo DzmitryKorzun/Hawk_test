@@ -6,13 +6,6 @@ public enum WeaponOwner
     Person,
     Enemy
 }
-public enum ShotDirection
-{
-    Up,
-    Down,
-    Left,
-    Right,
-}
 
 public class Gun : MonoBehaviour
 {
@@ -20,19 +13,22 @@ public class Gun : MonoBehaviour
     [SerializeField] private List<Bullet> allBullets;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private WeaponOwner weaponOwner;
-    [SerializeField] private ShotDirection shotDirection;
     [SerializeField] private Collider physicalField;
+    [SerializeField] private BaseLauncher launcher;
 
     private Queue<Transform> queueOfBullets;
     private System.Random random = new System.Random();
     private GameObject bulletContainer;
-    private Vector3 shootVectorDirection;
-    private Vector3 bulletVectorRotation;
+
     public float BulletSpeed
     {
         set
         {
             bulletSpeed = value;
+        }
+        get
+        {
+            return bulletSpeed;
         }
     }
 
@@ -40,7 +36,6 @@ public class Gun : MonoBehaviour
     {
         queueOfBullets = new Queue<Transform>();
         bulletContainer = new GameObject("bulletContainer");
-        shootVectorDirection = BulletDirection();
     }
 
     private void FixedUpdate()
@@ -61,7 +56,7 @@ public class Gun : MonoBehaviour
             Bullet bull = Instantiate(GetRandomRefBullet(), bulletContainer.transform);
             allBullets.Add(bull);
             bull.transform.position = this.transform.position;
-            bull.Setup(bulletSpeed, this, weaponOwner, physicalField, shootVectorDirection);
+            bull.Setup(bulletSpeed, this, weaponOwner, physicalField, launcher);
         }        
         if (bulletSpeed != allBullets[0].Speed)
         {
@@ -76,23 +71,6 @@ public class Gun : MonoBehaviour
     {
         int index = random.Next(refBullets.Count);
         return refBullets[index];
-    }
-
-    private Vector3 BulletDirection()
-    {
-        switch (shotDirection)
-        {
-            case ShotDirection.Up:
-                return Vector3.forward;
-            case ShotDirection.Down:
-                return Vector3.back;
-            case ShotDirection.Left:
-                return Vector3.left;
-            case ShotDirection.Right:
-                return Vector3.right;
-            default:
-                return Vector3.forward;
-        }
     }
 
     public void AddBulletToQueue(Transform bullTransform)
