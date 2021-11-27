@@ -16,15 +16,18 @@ namespace Core
             this.config = config;
         }
 
-        public void StartGame(GameScreen gameScreen, Character person, PhysicalAreaOfThePlayingField field, EnemySpawner enemySpawner)
+        public void StartGame(GameScreen gameScreen, Character person, PhysicalAreaOfThePlayingField field, EnemySpawner enemySpawner, MapGenerator mapGenerator, ScoreController scoreController, SaveManager saveManager)
         {
             this.physicalField = Instantiate(field);
             this.physicalField.gameObject.SetActive(false);
             this.character = Instantiate(person);
             character.gameObject.SetActive(true);
             character.Setup(config.PersonSpeed, config.StartShipPos, config.ShipSize, config.BulletSpeed, this, gameScreen, config.PersonHealth);
-            enemySpawner.AddEnemy();
             physicalField.Setting(character, config);
+            enemySpawner.Setting(scoreController, physicalField);
+            mapGenerator.Setting(physicalField, enemySpawner);
+            scoreController.Setting(config.MapMovementSpeed, saveManager);
+            gameScreen.Setting(scoreController);
         }
 
         public void FinishGame()

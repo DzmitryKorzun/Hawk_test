@@ -9,25 +9,63 @@ public class EnemySpawner : MonoBehaviour
         [SerializeField] private Vector3 pos;
         [SerializeField] private Enemy enemyPrefab;
         [SerializeField] private float health;
+        [SerializeField] private int destructionPointScore;
 
         public Vector3 StartPos => pos;
         public Enemy EnemyPrefab => enemyPrefab;
         public float Health => health;
+        public int DestructionPointScore => destructionPointScore;
     }
 
     [SerializeField] private List<EnemyData> enemiesData;
 
-    private List<Enemy> enemies = new List<Enemy>();
+    private Queue<Enemy>[] enemiesQueue;
+    private ScoreController scoreController;
+    private PhysicalAreaOfThePlayingField playingField;
 
-    public List<Enemy> Enemies => enemies;
-
-    public void AddEnemy()
+    private void Awake()
     {
-        for (int i = 0; i < enemiesData.Count; i++)
+        enemiesQueue = new Queue<Enemy>[enemiesData.Count];
+        for (int i = 0; i < enemiesQueue.Length; i++)
         {
-            Enemy enemy = Instantiate(enemiesData[i].EnemyPrefab);
-            enemies.Add(enemy);
-            enemies[i].Setting(enemiesData[i].Health, enemiesData[i].StartPos);
+            enemiesQueue[i] = new Queue<Enemy>();
         }
+    }
+
+    public void AddEnemy(Vector3 pos, int id)
+    {
+        if (enemiesQueue[id].Count == 0)
+        {
+            CreateEnemy(pos, id);
+        }
+        else
+        {
+            Enemy enemy = enemiesQueue[id].Dequeue();
+            enemy.gameObject.SetActive(true);
+            enemy.ReturnHealth();
+            enemy.Setting(enemiesData[id].Health, pos, this, scoreController, enemiesData[id].DestructionPointScore, id, playingField);
+        }
+    }
+
+    private void CreateEnemy(Vector3 pos, int id)
+    {
+        Enemy enemy = Instantiate(enemiesData[id].EnemyPrefab);
+        enemy.Setting(enemiesData[id].Health, pos, this, scoreController, enemiesData[id].DestructionPointScore, id, playingField);
+    }
+
+    public void enemiesEnqueue(Enemy enemy, int id)
+    {
+        enemiesQueue[id].Enqueue(enemy);
+    }
+
+    public void Setting(ScoreController scoreController, PhysicalAreaOfThePlayingField playingField)
+    {
+        this.scoreController = scoreController;
+        this.playingField = playingField;
+    }
+
+    public int GetEnemyTypeCount()
+    {
+        return enemiesQueue.Length;
     }
 }

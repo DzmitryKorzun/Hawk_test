@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3188de8a6a115dc478072acfddaa11c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 373863490548265027}
   angle: -75
   enumDirection: 0
   isEnum: 0
@@ -193,7 +192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3188de8a6a115dc478072acfddaa11c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 5694020439008923100}
   angle: 75
   enumDirection: 0
   isEnum: 0
@@ -414,7 +412,7 @@ PrefabInstance:
       objectReference: {fileID: 8844981150217391994}
     - target: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
       propertyPath: bulletSpeed
-      value: 0.4
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
       propertyPath: physicalField
@@ -587,7 +585,7 @@ PrefabInstance:
       objectReference: {fileID: 9080764491021448038}
     - target: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
       propertyPath: bulletSpeed
-      value: 0.4
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
       propertyPath: physicalField

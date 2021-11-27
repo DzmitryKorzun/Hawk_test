@@ -7,6 +7,7 @@ enum Direction
     Left,
     Right
 }
+
 public class LinearLauncher : BaseLauncher
 {
     [SerializeField] private float angle;
@@ -15,10 +16,8 @@ public class LinearLauncher : BaseLauncher
 
     private Vector3 direction;
 
-
     private void Awake()
     {
-        GetBulletSpeed();
         if (isEnum)
         {
             switch (enumDirection)
@@ -45,7 +44,7 @@ public class LinearLauncher : BaseLauncher
         }
     }
 
-    public override void Move(Bullet bul)
+    public override void Move(Bullet bul, int numThread)
     {
         bul.transform.Translate(direction * bulletSpeed);
     }

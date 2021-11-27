@@ -101,3 +101,6 @@ MonoBehaviour:
   bulletSpeed: 0
   weaponOwner: 0
   physicalField: {fileID: 4748427512223437331, guid: 8d997967c783b954e949344d6614ae3f, type: 3}
+  launcher: {fileID: 0}
+  numBulletsPerShot: 1
+  firingIntensity: 0.1

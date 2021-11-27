@@ -100,14 +100,6 @@ public class Character : MonoBehaviour
 
     }
 
-    private void SettingBulletWeaponsSpeed(float speed)
-    {
-        foreach (Gun myGun in guns)
-        {
-            myGun.BulletSpeed = speed;
-        }
-    }
-
     public void Setup(float speed, Vector3 startPos, Vector2 shipSize, float bulletSpeed, Game game, GameScreen gameScreen, float health)
     {
         this.game = game;
@@ -120,6 +112,14 @@ public class Character : MonoBehaviour
         maxSpeed = speed;
         this.health = health;
         this.maxHealth = health;
+    }
+
+    private void SettingBulletWeaponsSpeed(float speed)
+    {
+        foreach (Gun myGun in guns)
+        {
+            myGun.BulletSpeed = speed;
+        }
     }
 
     private void TakeDamage(float damage)
@@ -158,7 +158,7 @@ public class Character : MonoBehaviour
                 TakeDamage(bullet.Damage);
                 bullet.gameObject.SetActive(false);
                 Gun bullet—annon = bullet.MyGun;
-                bullet—annon.AddBulletToQueue(bullet.gameObject.transform);
+                bullet—annon.AddBulletToQueue(bullet.gameObject.transform, bullet.NumThread);
             }
         }
     }

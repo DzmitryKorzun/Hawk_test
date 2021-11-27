@@ -6,15 +6,17 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private MapEngeDetection mapRef;
     [SerializeField] private EnemySpawner enemySpawner;
     [SerializeField] private Vector3 firstMapChunkPosition;
-    [SerializeField] private Vector2 numberPossibleNumberInitPos;
+    [SerializeField] private float minRadius;
+    [SerializeField] private float maxNumberAttempts;
 
-    private float score;
-    private Vector3[,] coordinateCell;
     private int chunkNum;
     private float longMap;
-    private Queue<MapEngeDetection> mapEngeDetections = new Queue<MapEngeDetection>(); 
+    private Queue<MapEngeDetection> mapEngeDetections = new Queue<MapEngeDetection>();
     private PhysicalAreaOfThePlayingField playingField;
+    private List<Vector3> shipsCoordinate = new List<Vector3>();
     private float playingFieldX;
+    private bool isInValidPosition = true;
+    private int numberAttempts = 0;
 
     private void Awake()
     {
@@ -23,31 +25,31 @@ public class MapGenerator : MonoBehaviour
         map.Setting(this);
         SizeMapChunkDetermination(map);
     }
-
-    private void CreateCoordinatCellInitPos(MapEngeDetection map)
-    {
-        coordinateCell = new Vector3[(int)numberPossibleNumberInitPos.x, (int)numberPossibleNumberInitPos.y];
-        float startPosZ = map.transform.position.z - longMap;
-        Vector3 startPos = new Vector3(-playingFieldX, firstMapChunkPosition.y, startPosZ);
-        float stepX = (Mathf.Abs(map.transform.position.x - playingFieldX) * 2) / numberPossibleNumberInitPos.x;
-        float stepZ = (Mathf.Abs(map.transform.position.z - startPosZ) * 2) / numberPossibleNumberInitPos.y;
-        for (int i = 0; i < numberPossibleNumberInitPos.x; i++)
-        {
-            for (int j = 0; j < numberPossibleNumberInitPos.y; j++)
-            {
-            //    coordinateCell[i,j] = new Vector3
-            }
-        }
-    }
-
+    
     private void SizeMapChunkDetermination(MapEngeDetection map)
     {
         float posColider = map.GetComponent<Collider>().bounds.center.z;
-        longMap = (posColider - map.transform.position.z) * 2;
+        longMap = (posColider - map.transform.position.z);
     }
-    public void Setting(PhysicalAreaOfThePlayingField playingField)
+
+    private void AddEnemyToRandomPosition(MapEngeDetection map)
+    {
+        float minPlayingFieldY = map.transform.position.z + longMap - minRadius;
+        float maxPlayingFieldY = map.transform.position.z - longMap + minRadius;
+        Vector3 tmpPos = Vector3.zero;
+        for (int i = 0; i < enemySpawner.GetEnemyTypeCount(); i++)
+        {
+            float randPosX = UnityEngine.Random.Range(-playingFieldX + minRadius, playingFieldX - minRadius);
+            float randPosY = UnityEngine.Random.Range(minPlayingFieldY, maxPlayingFieldY);
+            tmpPos = new Vector3(randPosX, 0, randPosY);
+            enemySpawner.AddEnemy(tmpPos, i);
+        }
+    }
+
+    public void Setting(PhysicalAreaOfThePlayingField playingField, EnemySpawner enemySpawner)
     {
         this.playingField = playingField;
+        this.enemySpawner = enemySpawner;
         playingFieldX = playingField.BorderX;
     }
 
@@ -57,14 +59,14 @@ public class MapGenerator : MonoBehaviour
         if (mapEngeDetections.Count == 0)
         {
             MapEngeDetection map = Instantiate(mapRef);
-            map.transform.position = new Vector3(firstMapChunkPosition.x, firstMapChunkPosition.y, longMap * chunkNum);
+            map.transform.position = new Vector3(firstMapChunkPosition.x, firstMapChunkPosition.y, longMap * chunkNum * 2);
             map.Setting(this);
-            CreateCoordinatCellInitPos(map);
         }
         else
         {
             MapEngeDetection map = mapEngeDetections.Dequeue();
-            map.transform.position = new Vector3(firstMapChunkPosition.x, firstMapChunkPosition.y, longMap * chunkNum);
+            map.transform.position = new Vector3(firstMapChunkPosition.x, firstMapChunkPosition.y, longMap * chunkNum * 2);
+            AddEnemyToRandomPosition(map);
         }
     }
 

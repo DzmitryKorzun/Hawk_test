@@ -11,12 +11,18 @@ namespace Core
         [SerializeField] private ScreenController screenController;
         [SerializeField] private GameConfig gameConfig;
         [SerializeField] private EnemySpawner enemySpawner;
+        [SerializeField] private MapGenerator mapGenerator;
+        [SerializeField] private ScoreController scoreController;
+        [SerializeField] private SaveManager saveManager;
 
         private Game game;
         private bool isLevelStart;
 
         public bool IsLevelStart => isLevelStart;
+
         public Character Player { get; private set; }
+
+        SaveManager IMeta.saveManager => saveManager;
 
         private void Awake()
         {
@@ -39,7 +45,7 @@ namespace Core
         {
             isLevelStart = false;
             GameScreen gameScreen = screenController.ShowGameScreen();
-            game.StartGame(gameScreen, characterPrefab, physicalField, enemySpawner);
+            game.StartGame(gameScreen, characterPrefab, physicalField, enemySpawner, mapGenerator, scoreController, saveManager);
         }
     }
 }

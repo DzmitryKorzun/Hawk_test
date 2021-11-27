@@ -13,8 +13,10 @@ public class PhysicalAreaOfThePlayingField : MonoBehaviour
     private float borderZ;
     private Vector2 min;
     private Vector2 max;
+    private Camera cam;
 
     public float BorderX => borderX;
+    public float MoveSpeed => moveSpeed;
 
     public void Setting(Character character, GameConfig gameConfig)
     {
@@ -24,6 +26,7 @@ public class PhysicalAreaOfThePlayingField : MonoBehaviour
         this.field = this.gameObject.GetComponent<Collider>();
         this.transformField = GetComponent<Transform>();
         this.gameObject.SetActive(true);
+        this.cam = Camera.main;
         borderX = (field.transform.position.x + field.bounds.size.x) / 2 - gameConfig.ShipSize.x;
         borderZ = (centerZ + field.bounds.size.z) / 2 - gameConfig.ShipSize.y;
         centerZ = field.transform.position.z;
@@ -38,6 +41,6 @@ public class PhysicalAreaOfThePlayingField : MonoBehaviour
         max = new Vector2(borderX, borderZ);
         character.SettingShipBoundaries(min,max);
         this.transform.Translate(Vector3.forward * moveSpeed);
-        Camera.main.transform.position = new Vector3(transformField.position.x, gameConfig.CameraHeightAboveMap, transformField.position.z);        
+        cam.transform.position = new Vector3(transformField.position.x, gameConfig.CameraHeightAboveMap, transformField.position.z);        
     }
 }

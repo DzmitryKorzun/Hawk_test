@@ -3,12 +3,19 @@ using UnityEngine.UI;
 
 public class MenuScreen : MonoBehaviour
 {
+    [SerializeField] private Button playButton;
+    [SerializeField] private Text maxScore;
+    [SerializeField] private Text lastAttemptText;
+
     private IMeta meta;
-    [SerializeField] private Button button;
+    private SaveManager saveManager;
     public void Setup(IMeta meta)
     {
         this.meta = meta;
-        button.onClick.AddListener(GameStartEvent);
+        this.saveManager = meta.saveManager;
+        maxScore.text = string.Concat("Record: ", saveManager.GetValue<int>(savePoint.maxScore));
+        lastAttemptText.text = string.Concat("Last attempt: ", saveManager.GetValue<int>(savePoint.lastRace));
+        playButton.onClick.AddListener(GameStartEvent);
     }
 
     private void GameStartEvent()

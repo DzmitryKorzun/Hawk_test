@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class BaseLauncher : MonoBehaviour
 {
-    [SerializeField] protected Gun gun;
-
     protected float bulletSpeed;
+    protected int numThread = 1;
+    public int  NumThread => numThread;
 
-    private void Awake()
+    public void GetBulletSpeed(float bulletSpeed)
     {
-        GetBulletSpeed();
+        this.bulletSpeed = bulletSpeed;
     }
 
-    protected void GetBulletSpeed()
+    public virtual int SetNumBulletsPerShot()
     {
-        bulletSpeed = gun.BulletSpeed;
+        return numThread;
     }
 
-    public virtual void Move(Bullet bul)
+    public virtual void Move(Bullet bul, int numThread)
     {
         bul.transform.Translate(Vector3.forward * bulletSpeed);
     }

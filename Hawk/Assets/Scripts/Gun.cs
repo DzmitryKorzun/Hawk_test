@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,8 +16,10 @@ public class Gun : MonoBehaviour
     [SerializeField] private WeaponOwner weaponOwner;
     [SerializeField] private Collider physicalField;
     [SerializeField] private BaseLauncher launcher;
+    [SerializeField] private int numBulletsPerShot;
+    [SerializeField] private float firingIntensity;
 
-    private Queue<Transform> queueOfBullets;
+    private Queue<Transform>[] queueOfBullets;
     private System.Random random = new System.Random();
     private GameObject bulletContainer;
 
@@ -32,39 +35,59 @@ public class Gun : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
-        queueOfBullets = new Queue<Transform>();
         bulletContainer = new GameObject("bulletContainer");
+        Debug.Log(bulletSpeed);
+        launcher.GetBulletSpeed(BulletSpeed);
+        numBulletsPerShot = launcher.SetNumBulletsPerShot();
+        InitQueueOfBullets();
+        StartFire();
     }
 
-    private void FixedUpdate()
+    private IEnumerator FireCorontine()
     {
-        Fire();
+        while (true)
+        {
+            Fire();
+            yield return new WaitForSeconds(firingIntensity);
+        }
+    }
+
+    private void InitQueueOfBullets()
+    {
+        queueOfBullets = new Queue<Transform>[numBulletsPerShot];
+        for (int i = 0; i < numBulletsPerShot; i++)
+        {
+            queueOfBullets[i] = new Queue<Transform>();
+        }
     }
 
     private void Fire()
     {
-        if (queueOfBullets.Count > 0)
+        for (int i = 0; i < numBulletsPerShot; i++)
         {
-            Transform obj = this.queueOfBullets.Dequeue();
-            obj.position = this.transform.position; 
-            obj.gameObject.SetActive(true);
-        }
-        else
-        {
-            Bullet bull = Instantiate(GetRandomRefBullet(), bulletContainer.transform);
-            allBullets.Add(bull);
-            bull.transform.position = this.transform.position;
-            bull.Setup(bulletSpeed, this, weaponOwner, physicalField, launcher);
-        }        
-        if (bulletSpeed != allBullets[0].Speed)
-        {
-            foreach (Bullet bullet in allBullets)
+            if (queueOfBullets[i].Count > 0)
             {
-                bullet.Speed = bulletSpeed;
+                Transform obj = this.queueOfBullets[i].Dequeue();
+                obj.position = this.transform.position;
+                obj.gameObject.SetActive(true);
             }
-        }
+            else
+            {
+                Bullet bull = Instantiate(GetRandomRefBullet(), bulletContainer.transform);
+                allBullets.Add(bull);
+                bull.transform.position = this.transform.position;
+                bull.Setup(bulletSpeed, this, weaponOwner, physicalField, launcher, i);
+            }
+            if (bulletSpeed != allBullets[0].Speed)
+            {
+                foreach (Bullet bullet in allBullets)
+                {
+                    bullet.Speed = bulletSpeed;
+                }
+            }
+        }       
     }
 
     private Bullet GetRandomRefBullet()
@@ -73,9 +96,14 @@ public class Gun : MonoBehaviour
         return refBullets[index];
     }
 
-    public void AddBulletToQueue(Transform bullTransform)
+    public void AddBulletToQueue(Transform bullTransform, int numThread)
     {
         bullTransform.gameObject.SetActive(false);
-        queueOfBullets.Enqueue(bullTransform);
+        queueOfBullets[numThread].Enqueue(bullTransform);
+    }
+
+    public void StartFire()
+    {
+        StartCoroutine(FireCorontine());
     }
 }
