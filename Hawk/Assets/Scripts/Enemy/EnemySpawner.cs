@@ -9,19 +9,33 @@ public class EnemySpawner : MonoBehaviour
         [SerializeField] private Vector3 pos;
         [SerializeField] private Enemy enemyPrefab;
         [SerializeField] private float health;
-        [SerializeField] private int destructionPointScore;
+        [SerializeField] private float destructionPointScore;
 
         public Vector3 StartPos => pos;
         public Enemy EnemyPrefab => enemyPrefab;
         public float Health => health;
-        public int DestructionPointScore => destructionPointScore;
+        public float DestructionPointScore => destructionPointScore;
     }
 
     [SerializeField] private List<EnemyData> enemiesData;
 
+    private float difficultCoefficient;
     private Queue<Enemy>[] enemiesQueue;
     private ScoreController scoreController;
     private PhysicalAreaOfThePlayingField playingField;
+
+
+    public float DifficultCoefficient
+    {
+        set
+        {
+            difficultCoefficient = value;
+        }
+        get
+        {
+            return difficultCoefficient;
+        }
+    }
 
     private void Awake()
     {
@@ -43,14 +57,14 @@ public class EnemySpawner : MonoBehaviour
             Enemy enemy = enemiesQueue[id].Dequeue();
             enemy.gameObject.SetActive(true);
             enemy.ReturnHealth();
-            enemy.Setting(enemiesData[id].Health, pos, this, scoreController, enemiesData[id].DestructionPointScore, id, playingField);
+            enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)(enemiesData[id].DestructionPointScore * difficultCoefficient), id, playingField);
         }
     }
 
     private void CreateEnemy(Vector3 pos, int id)
     {
         Enemy enemy = Instantiate(enemiesData[id].EnemyPrefab);
-        enemy.Setting(enemiesData[id].Health, pos, this, scoreController, enemiesData[id].DestructionPointScore, id, playingField);
+        enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)enemiesData[id].DestructionPointScore, id, playingField);
     }
 
     public void enemiesEnqueue(Enemy enemy, int id)

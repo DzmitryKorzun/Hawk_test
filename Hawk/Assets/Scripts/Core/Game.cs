@@ -28,6 +28,7 @@ namespace Core
             mapGenerator.Setting(physicalField, enemySpawner);
             scoreController.Setting(config.MapMovementSpeed, saveManager);
             gameScreen.Setting(scoreController);
+            Debug.Log(enemySpawner.DifficultCoefficient);
         }
 
         public void FinishGame()

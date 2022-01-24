@@ -117,6 +117,7 @@ MonoBehaviour:
   - {fileID: 373863490548265027}
   - {fileID: 5694020439008923100}
   healthBar: {fileID: 2857129194843733366}
+  enemyCollider: {fileID: 3330770100117509697}
 --- !u!54 &-8724241791792350895
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,36 +166,6 @@ Transform:
   m_Father: {fileID: 5804975800929289593}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8844981150217391994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3786274456807223680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3188de8a6a115dc478072acfddaa11c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  angle: -75
-  enumDirection: 0
-  isEnum: 0
---- !u!114 &9080764491021448038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9132894566012947487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3188de8a6a115dc478072acfddaa11c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  angle: 75
-  enumDirection: 0
-  isEnum: 0
 --- !u!1001 &3051969958367770536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -445,6 +416,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ec1704f5fc3324d830e0746084ee7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8844981150217391994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3786274456807223680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3188de8a6a115dc478072acfddaa11c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angle: -75
+  enumDirection: 0
+  isEnum: 0
 --- !u!1001 &3946924559116799248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -618,3 +604,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ec1704f5fc3324d830e0746084ee7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9080764491021448038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132894566012947487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3188de8a6a115dc478072acfddaa11c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angle: 75
+  enumDirection: 0
+  isEnum: 0

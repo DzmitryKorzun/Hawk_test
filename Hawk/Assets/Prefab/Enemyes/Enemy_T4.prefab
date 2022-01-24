@@ -1,22 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2743055836584540643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6232408404905403215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e4b8ab060290434ab74d75a24aba9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  threadDatas:
-  - referenceDirection: 1
-    angle: 30
-  - referenceDirection: 1
-    angle: -60
 --- !u!1 &7269532858992619286
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +103,7 @@ MonoBehaviour:
   guns:
   - {fileID: 7477734873260057228}
   healthBar: {fileID: 6771069735138944265}
+  enemyCollider: {fileID: 7793353088757170669}
 --- !u!54 &-4444598050930610988
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -251,6 +235,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ec1704f5fc3324d830e0746084ee7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2743055836584540643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232408404905403215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e4b8ab060290434ab74d75a24aba9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threadDatas:
+  - referenceDirection: 1
+    angle: 30
+  - referenceDirection: 1
+    angle: -60
 --- !u!1001 &5767955879705489367
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private ParticleSystem destroyEffect;
     [SerializeField] private Gun[] guns;
     [SerializeField] private HealthBarController healthBar;
+    [SerializeField] private Collider enemyCollider;
 
     private int typeId;
     private EnemySpawner enemySpawner;
@@ -57,10 +58,12 @@ public class Enemy : MonoBehaviour
         this.typeId = typeId;
         this.playingFieldColider = playingField.gameObject.GetComponent<Collider>();
         SwitchingGuns(false);
+        Debug.Log("HP = "+this.maxHealth);
     }
 
     public void ReturnHealth()
     {
+        enemyCollider.enabled = true;
         isLive = true;
         health = maxHealth;
         healthBar.gameObject.SetActive(true);
@@ -85,10 +88,11 @@ public class Enemy : MonoBehaviour
         healthBar.FillImage(health / maxHealth);
         if (health == 0 && isLive)
         {
+            enemyCollider.enabled = false;
             isLive = false;
             destroyEffect.Play();
             SwitchingGuns(false);
-            Invoke("DisableShip", 1.5f);
+            Invoke(nameof(DisableShip), 1.5f);
         }
     }
 

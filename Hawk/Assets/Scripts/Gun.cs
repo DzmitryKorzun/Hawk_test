@@ -45,15 +45,6 @@ public class Gun : MonoBehaviour
         StartFire();
     }
 
-    private IEnumerator FireCorontine()
-    {
-        while (true)
-        {
-            Fire();
-            yield return new WaitForSeconds(firingIntensity);
-        }
-    }
-
     private void InitQueueOfBullets()
     {
         queueOfBullets = new Queue<Transform>[numBulletsPerShot];
@@ -104,6 +95,6 @@ public class Gun : MonoBehaviour
 
     public void StartFire()
     {
-        StartCoroutine(FireCorontine());
+        InvokeRepeating(nameof(Fire), firingIntensity, firingIntensity);
     }
 }

@@ -10,6 +10,7 @@ public class HealthBarController : MonoBehaviour
 
     public void  FillImage(float value)
     {
+        Debug.Log(value);
         healthBarImage.fillAmount = value;
         healthBarImage.color = gradient.Evaluate(value);
     }

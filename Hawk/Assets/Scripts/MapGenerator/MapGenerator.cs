@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private Vector3 firstMapChunkPosition;
     [SerializeField] private float minRadius;
     [SerializeField] private float maxNumberAttempts;
+    [SerializeField] private Image[] mapImages;
+    [SerializeField] private GameObject scoreController;
 
     private int chunkNum;
     private float longMap;
@@ -55,6 +58,7 @@ public class MapGenerator : MonoBehaviour
 
     public void AddNewChunk()
     {
+        scoreController.SetActive(true);
         chunkNum++;
         if (mapEngeDetections.Count == 0)
         {
