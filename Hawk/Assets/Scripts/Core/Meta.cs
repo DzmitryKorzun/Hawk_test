@@ -1,4 +1,5 @@
 using Config;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,11 +15,14 @@ namespace Core
         [SerializeField] private MapGenerator mapGenerator;
         [SerializeField] private ScoreController scoreController;
         [SerializeField] private SaveManager saveManager;
+        [SerializeField] private ResultPannelController resultPannelController;
 
         private Game game;
-        private bool isLevelStart;
+        private List<IPauseGame> pauseGameComponents = new List<IPauseGame>();
 
-        public bool IsLevelStart => isLevelStart;
+
+        public delegate void PauseGameDelegate(bool isPaused);
+        public event PauseGameDelegate onPauseGame;
 
         public Character Player { get; private set; }
 
@@ -29,7 +33,7 @@ namespace Core
             game = new Game(this, gameConfig);
             GoToMenu();
         }
-
+        
         public void FinishGame()
         {
             SceneManager.LoadScene(0);
@@ -43,9 +47,21 @@ namespace Core
 
         public void StartGame()
         {
-            isLevelStart = false;
             GameScreen gameScreen = screenController.ShowGameScreen();
-            game.StartGame(gameScreen, characterPrefab, physicalField, enemySpawner, mapGenerator, scoreController, saveManager);
+            game.StartGame(gameScreen, characterPrefab, physicalField, enemySpawner, mapGenerator, scoreController, saveManager, resultPannelController);
+        }
+
+        public void AddPauseGameComponentToList(IPauseGame isPausedComponent)
+        {
+            pauseGameComponents.Add(isPausedComponent);
+        }
+
+        public void PauseGame(bool value)
+        {
+            foreach (var component in pauseGameComponents)
+            {
+                component.PauseGame(value);
+            }
         }
     }
 }

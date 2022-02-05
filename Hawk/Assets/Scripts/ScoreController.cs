@@ -11,7 +11,8 @@ public class ScoreController : MonoBehaviour
     private SaveManager saveManager;
 
     public int Score => score;
-
+    public int MaxScore => maxScore;
+    
     public void AddBonusScore(int value)
     {
         score += value;
@@ -47,5 +48,4 @@ public class ScoreController : MonoBehaviour
     {
         record—heck();
     }
-
 }

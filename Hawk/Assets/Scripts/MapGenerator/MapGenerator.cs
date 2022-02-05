@@ -2,24 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator : MonoBehaviour, IPauseGame
 {
     [SerializeField] private MapEngeDetection mapRef;
     [SerializeField] private EnemySpawner enemySpawner;
     [SerializeField] private Vector3 firstMapChunkPosition;
     [SerializeField] private float minRadius;
-    [SerializeField] private float maxNumberAttempts;
-    [SerializeField] private Image[] mapImages;
     [SerializeField] private GameObject scoreController;
 
     private int chunkNum;
     private float longMap;
     private Queue<MapEngeDetection> mapEngeDetections = new Queue<MapEngeDetection>();
     private PhysicalAreaOfThePlayingField playingField;
-    private List<Vector3> shipsCoordinate = new List<Vector3>();
     private float playingFieldX;
-    private bool isInValidPosition = true;
-    private int numberAttempts = 0;
 
     private void Awake()
     {
@@ -65,6 +60,7 @@ public class MapGenerator : MonoBehaviour
             MapEngeDetection map = Instantiate(mapRef);
             map.transform.position = new Vector3(firstMapChunkPosition.x, firstMapChunkPosition.y, longMap * chunkNum * 2);
             map.Setting(this);
+            AddEnemyToRandomPosition(map);
         }
         else
         {
@@ -77,5 +73,10 @@ public class MapGenerator : MonoBehaviour
     public void ReturnToQueue(MapEngeDetection map)
     {
         mapEngeDetections.Enqueue(map);
+    }
+
+    public void PauseGame(bool isPaused)
+    {
+        
     }
 }

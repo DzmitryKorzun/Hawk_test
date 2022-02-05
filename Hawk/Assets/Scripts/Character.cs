@@ -1,4 +1,5 @@
 using Core;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -25,12 +26,19 @@ public class Character : MonoBehaviour
     private Game game;
     private float health;
     private float maxHealth;
+    private ResultPannelController resultPannel;
+    private RuntimePlatform runtimePlatform;
 
     public GameObject Target => target;
 
+    private void Awake()
+    {
+        runtimePlatform = Application.platform;
+    }
+
     private void FixedUpdate()
     {
-        if (Application.platform == RuntimePlatform.Android)
+        if (runtimePlatform == RuntimePlatform.Android)
         {
             if (Input.touchCount > 0)
             {
@@ -66,7 +74,7 @@ public class Character : MonoBehaviour
             }
             charcterTransform.position = Vector3.MoveTowards(charcterTransform.position, target.transform.position, maxSpeed);
         }
-        if (Application.platform == RuntimePlatform.WindowsEditor)
+        if (runtimePlatform == RuntimePlatform.WindowsEditor)
         {
             if (Input.GetMouseButton(0))
             {
@@ -97,21 +105,22 @@ public class Character : MonoBehaviour
     {
         this.min = min;
         this.max = max;
-
     }
 
-    public void Setup(float speed, Vector3 startPos, Vector2 shipSize, float bulletSpeed, Game game, GameScreen gameScreen, float health)
+    public void Setup(float speed, Vector3 startPos, Vector2 shipSize, float bulletSpeed, Game game, GameScreen gameScreen, float health, ResultPannelController resultPannelController, GameObject bulletsContainers)
     {
         this.game = game;
         this.shipSize = shipSize;
-        charcterTransform = this.GetComponent<Transform>();
-        charcterTransform.position = startPos;       
-        target = Instantiate(movementTarget);
-        target.transform.position = startPos;
-        SettingBulletWeaponsSpeed(bulletSpeed);
-        maxSpeed = speed;
+        this.charcterTransform = this.GetComponent<Transform>();
+        this.charcterTransform.position = startPos;
+        this.target = Instantiate(movementTarget);
+        this.target.transform.position = startPos;
+        this.SettingBulletWeaponsSpeed(bulletSpeed);
+        this.maxSpeed = speed;
         this.health = health;
         this.maxHealth = health;
+        this.resultPannel = resultPannelController;
+        SetupAllGuns(bulletsContainers);
     }
 
     private void SettingBulletWeaponsSpeed(float speed)
@@ -131,13 +140,19 @@ public class Character : MonoBehaviour
             maxSpeed = 0;
             shipDestroyEffect.Play();
             DisableGuns();
-            Invoke("GameOver", 1.5f);
+            Invoke(nameof(GameOver), 1.5f);
         }
     }
-
+    private void SetupAllGuns(GameObject bulletsContainers)
+    {
+        foreach (Gun myGun in guns)
+        {
+            myGun.Setup(bulletsContainers);
+        }
+    }
     private void GameOver()
     {
-        game.FinishGame();
+        resultPannel.gameObject.SetActive(true);
     }
 
     private void DisableGuns()

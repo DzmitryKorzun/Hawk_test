@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Gun[] guns;
     [SerializeField] private HealthBarController healthBar;
     [SerializeField] private Collider enemyCollider;
+    [SerializeField] private MeshRenderer meshRenderer;
 
     private int typeId;
     private EnemySpawner enemySpawner;
@@ -47,7 +48,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Setting(float health, Vector3 startPos, EnemySpawner enemySpawner, ScoreController scoreController, int destructionPointScore, int typeId, PhysicalAreaOfThePlayingField playingField)
+    public void Setting(float health, Vector3 startPos, EnemySpawner enemySpawner, ScoreController scoreController, int destructionPointScore, int typeId, PhysicalAreaOfThePlayingField playingField, GameObject bulletsContainers)
     {
         this.health = health;
         this.maxHealth = health;
@@ -58,12 +59,13 @@ public class Enemy : MonoBehaviour
         this.typeId = typeId;
         this.playingFieldColider = playingField.gameObject.GetComponent<Collider>();
         SwitchingGuns(false);
-        Debug.Log("HP = "+this.maxHealth);
+        SetupAllGuns(bulletsContainers);
     }
 
     public void ReturnHealth()
     {
         enemyCollider.enabled = true;
+        meshRenderer.enabled = true;
         isLive = true;
         health = maxHealth;
         healthBar.gameObject.SetActive(true);
@@ -80,8 +82,21 @@ public class Enemy : MonoBehaviour
             {
                 myGun.StartFire();
             }
+            else
+            {
+                myGun.StopFiring();
+            }
         }
     }
+
+    private void SetupAllGuns(GameObject bulletsContainers)
+    {
+        foreach (Gun myGun in guns)
+        {
+            myGun.Setup(bulletsContainers);
+        }
+    }
+
     private void TakeDamage(float damage)
     {
         this.health = Mathf.Clamp(health - damage, 0, health);
@@ -92,14 +107,16 @@ public class Enemy : MonoBehaviour
             isLive = false;
             destroyEffect.Play();
             SwitchingGuns(false);
+            meshRenderer.enabled = false;
+            healthBar.gameObject.SetActive(false);
             Invoke(nameof(DisableShip), 1.5f);
         }
     }
 
     private void DisableShip()
     {
+        SwitchingGuns(false);
         this.gameObject.SetActive(false);
-        healthBar.gameObject.SetActive(false);
         enemySpawner.enemiesEnqueue(this, typeId);
         scoreController.AddBonusScore(5);
     }

@@ -118,6 +118,7 @@ MonoBehaviour:
   - {fileID: 5694020439008923100}
   healthBar: {fileID: 2857129194843733366}
   enemyCollider: {fileID: 3330770100117509697}
+  meshRenderer: {fileID: 5295669943090550951}
 --- !u!54 &-8724241791792350895
 Rigidbody:
   m_ObjectHideFlags: 0

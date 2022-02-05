@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, IPauseGame
 {
     [Serializable] private class EnemyData
     {
@@ -18,12 +18,13 @@ public class EnemySpawner : MonoBehaviour
     }
 
     [SerializeField] private List<EnemyData> enemiesData;
+    [SerializeField] private Transform enemyContainer;
 
     private float difficultCoefficient;
     private Queue<Enemy>[] enemiesQueue;
     private ScoreController scoreController;
     private PhysicalAreaOfThePlayingField playingField;
-
+    private GameObject bulletsContainers;
 
     public float DifficultCoefficient
     {
@@ -57,14 +58,14 @@ public class EnemySpawner : MonoBehaviour
             Enemy enemy = enemiesQueue[id].Dequeue();
             enemy.gameObject.SetActive(true);
             enemy.ReturnHealth();
-            enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)(enemiesData[id].DestructionPointScore * difficultCoefficient), id, playingField);
+            enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)(enemiesData[id].DestructionPointScore * difficultCoefficient), id, playingField, bulletsContainers);
         }
     }
 
     private void CreateEnemy(Vector3 pos, int id)
     {
-        Enemy enemy = Instantiate(enemiesData[id].EnemyPrefab);
-        enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)enemiesData[id].DestructionPointScore, id, playingField);
+        Enemy enemy = Instantiate(enemiesData[id].EnemyPrefab, enemyContainer);
+        enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)enemiesData[id].DestructionPointScore, id, playingField, bulletsContainers);
     }
 
     public void enemiesEnqueue(Enemy enemy, int id)
@@ -72,14 +73,20 @@ public class EnemySpawner : MonoBehaviour
         enemiesQueue[id].Enqueue(enemy);
     }
 
-    public void Setting(ScoreController scoreController, PhysicalAreaOfThePlayingField playingField)
+    public void Setting(ScoreController scoreController, PhysicalAreaOfThePlayingField playingField, GameObject bulletsContainers)
     {
         this.scoreController = scoreController;
         this.playingField = playingField;
+        this.bulletsContainers = bulletsContainers;
     }
 
     public int GetEnemyTypeCount()
     {
         return enemiesQueue.Length;
+    }
+
+    public void PauseGame(bool isPaused)
+    {
+        
     }
 }

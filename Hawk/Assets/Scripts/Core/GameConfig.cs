@@ -11,6 +11,7 @@ namespace Config
         [SerializeField] private float bulletSpeed;
         [SerializeField] private float mapMovementSpeed;
         [SerializeField] private float cameraHeightAboveMap;
+        [SerializeField] private float modelRotationSpeedOnSummaryScreen;
 
         public float PersonSpeed => personSpeed;
         public Vector2 ShipSize => shipSize;
@@ -19,6 +20,7 @@ namespace Config
         public float PersonHealth => personHealth;
         public float MapMovementSpeed => mapMovementSpeed;
         public float CameraHeightAboveMap => cameraHeightAboveMap;
+        public float ModelRotation => modelRotationSpeedOnSummaryScreen;
     }
 }
 

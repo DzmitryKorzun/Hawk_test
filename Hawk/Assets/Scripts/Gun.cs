@@ -22,6 +22,7 @@ public class Gun : MonoBehaviour
     private Queue<Transform>[] queueOfBullets;
     private System.Random random = new System.Random();
     private GameObject bulletContainer;
+    private GameObject allContainers;
 
     public float BulletSpeed
     {
@@ -35,10 +36,16 @@ public class Gun : MonoBehaviour
         }
     }
 
+    public void Setup(GameObject allContainers)
+    {
+        this.allContainers = allContainers;
+    }
+
     private void Start()
     {
+        //bulletContainer = Instantiate(allContainers, allContainers.transform);
         bulletContainer = new GameObject("bulletContainer");
-        Debug.Log(bulletSpeed);
+        bulletContainer.transform.parent = allContainers.transform;
         launcher.GetBulletSpeed(BulletSpeed);
         numBulletsPerShot = launcher.SetNumBulletsPerShot();
         InitQueueOfBullets();
@@ -96,5 +103,10 @@ public class Gun : MonoBehaviour
     public void StartFire()
     {
         InvokeRepeating(nameof(Fire), firingIntensity, firingIntensity);
+    }
+
+    public void StopFiring()
+    {
+        CancelInvoke(nameof(Fire));
     }
 }
