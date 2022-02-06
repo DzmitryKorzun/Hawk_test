@@ -58,6 +58,7 @@ namespace Core
 
         public void PauseGame(bool value)
         {
+            Debug.Log("Пауза");
             foreach (var component in pauseGameComponents)
             {
                 component.PauseGame(value);

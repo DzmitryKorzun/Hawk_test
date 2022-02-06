@@ -11,7 +11,6 @@ public class ResultPannelController : MonoBehaviour
     [SerializeField] private Text scoreNumText;
     [SerializeField] private Text recordNumText;
     [SerializeField] private Transform shipModel;
-    [SerializeField] private List<GameObject> gameObjectsForDeactivation;
 
     private Game game;
     private GameConfig gameConfig;
@@ -25,20 +24,11 @@ public class ResultPannelController : MonoBehaviour
     {
         this.game = game;
         this.gameConfig = gameConfig;
-        this.gameObjectsForDeactivation.Add(bulletsContainers);
     }
 
     private void RealoadLevel()
     {
         game.FinishGame();
-    }
-
-    private void DeactivateObjects()
-    {
-        foreach (GameObject gameObject in gameObjectsForDeactivation)
-        {
-            gameObject.SetActive(false);
-        }
     }
 
     private void FixedUpdate()
@@ -48,8 +38,15 @@ public class ResultPannelController : MonoBehaviour
 
     private void OnEnable()
     {
-        DeactivateObjects();
+        Debug.Log("Панель результатов активип=рована");
+        game.PauseGame(true);
         scoreNumText.text = scoreController.Score.ToString();
         recordNumText.text = scoreController.MaxScore.ToString();
     }
+
+    private void OnDisable()
+    {
+        game.PauseGame(false);
+    }
 }
+

@@ -40,6 +40,8 @@ namespace Core
             scoreController.Setting(config.MapMovementSpeed, saveManager);
             gameScreen.Setting(scoreController);
             meta.AddPauseGameComponentToList(enemySpawner);
+            meta.AddPauseGameComponentToList(field);
+            meta.AddPauseGameComponentToList(character);
         }
 
         public void FinishGame()

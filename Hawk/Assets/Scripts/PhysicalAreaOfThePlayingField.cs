@@ -1,7 +1,7 @@
 using Config;
 using UnityEngine;
 
-public class PhysicalAreaOfThePlayingField : MonoBehaviour
+public class PhysicalAreaOfThePlayingField : MonoBehaviour, IPauseGame
 {
     private Character character;
     private float moveSpeed;
@@ -16,13 +16,26 @@ public class PhysicalAreaOfThePlayingField : MonoBehaviour
     private Camera cam;
 
     public float BorderX => borderX;
-    public float MoveSpeed => moveSpeed;
+
+    public void PauseGame(bool isPaused)
+    {
+        if (isPaused)
+        {
+            this.enabled = false;
+            Debug.Log(this.enabled);
+        }
+        else
+        {
+          //  moveSpeed = tmpMoveSpeedCash;
+            Debug.Log(isPaused);
+        }
+    }
 
     public void Setting(Character character, GameConfig gameConfig)
     {
         this.character = character;
-        this.moveSpeed = gameConfig.MapMovementSpeed;
         this.gameConfig = gameConfig;
+        this.moveSpeed = this.gameConfig.MapMovementSpeed;
         this.field = this.gameObject.GetComponent<Collider>();
         this.transformField = GetComponent<Transform>();
         this.gameObject.SetActive(true);

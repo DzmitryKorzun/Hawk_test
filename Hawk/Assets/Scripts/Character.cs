@@ -2,7 +2,7 @@ using Core;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, IPauseGame
 {
     [SerializeField] private Vector2 shipSize;
     [SerializeField] private Vector3 startPos;
@@ -175,6 +175,18 @@ public class Character : MonoBehaviour
                 Gun bullet—annon = bullet.MyGun;
                 bullet—annon.AddBulletToQueue(bullet.gameObject.transform, bullet.NumThread);
             }
+        }
+    }
+
+    public void PauseGame(bool isPaused)
+    {
+        if (isPaused)
+        {
+            DisableGuns();
+        }
+        else
+        {
+
         }
     }
 }
