@@ -27,7 +27,7 @@ public class PhysicalAreaOfThePlayingField : MonoBehaviour, IPauseGame
         else
         {
           //  moveSpeed = tmpMoveSpeedCash;
-            Debug.Log(isPaused);
+          //  Debug.Log(isPaused);
         }
     }
 
