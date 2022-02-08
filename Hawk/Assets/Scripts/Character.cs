@@ -143,6 +143,14 @@ public class Character : MonoBehaviour, IPauseGame
             Invoke(nameof(GameOver), 1.5f);
         }
     }
+
+    private void RegenHealth(float heal)
+    {
+        this.health = Mathf.Clamp(health + heal, 0, maxHealth);
+        healthBar.FillImage(health / maxHealth);
+    }
+
+
     private void SetupAllGuns(GameObject bulletsContainers)
     {
         foreach (Gun myGun in guns)
@@ -174,6 +182,14 @@ public class Character : MonoBehaviour, IPauseGame
                 bullet.gameObject.SetActive(false);
                 Gun bullet—annon = bullet.MyGun;
                 bullet—annon.AddBulletToQueue(bullet.gameObject.transform, bullet.NumThread);
+            }
+        }
+        else
+        {
+            MedicineChest medicineChest = other.gameObject.GetComponent<MedicineChest>();
+            if (medicineChest != null)
+            {
+                RegenHealth(medicineChest.HealthRegen);
             }
         }
     }

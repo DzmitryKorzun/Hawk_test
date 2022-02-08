@@ -38,7 +38,6 @@ public class ResultPannelController : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("Панель результатов активип=рована");
         game.PauseGame(true);
         scoreNumText.text = scoreController.Score.ToString();
         recordNumText.text = scoreController.MaxScore.ToString();
