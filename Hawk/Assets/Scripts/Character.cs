@@ -190,6 +190,7 @@ public class Character : MonoBehaviour, IPauseGame
             if (medicineChest != null)
             {
                 RegenHealth(medicineChest.HealthRegen);
+                medicineChest.gameObject.SetActive(true);
             }
         }
     }

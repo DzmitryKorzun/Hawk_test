@@ -10,6 +10,7 @@ public class MapGenerator : MonoBehaviour, IPauseGame
     [SerializeField] private float minRadius;
     [SerializeField] private GameObject scoreController;
     [SerializeField] private MedicineChest healthBox;
+    [SerializeField] private MedicineChestSpawner medecineChestSpawner;
 
     private int chunkNum;
     private float longMap;
@@ -59,7 +60,11 @@ public class MapGenerator : MonoBehaviour, IPauseGame
 
     private void AttemptAddHealthBox()
     {
-
+        MedicineChest medicineChest = medecineChestSpawner.TryGenerateMedicineChest();
+        if (medicineChest != null)
+        {
+            medicineChest.gameObject.transform.position = GetRandomMapPosition();
+        }
     }
 
     public void Setting(PhysicalAreaOfThePlayingField playingField, EnemySpawner enemySpawner)
@@ -79,12 +84,14 @@ public class MapGenerator : MonoBehaviour, IPauseGame
             map.transform.position = new Vector3(firstMapChunkPosition.x, firstMapChunkPosition.y, longMap * chunkNum * 2);
             map.Setting(this);
             AddEnemyToRandomPosition(map);
+            AttemptAddHealthBox();
         }
         else
         {
             MapEngeDetection map = mapEngeDetections.Dequeue();
             map.transform.position = new Vector3(firstMapChunkPosition.x, firstMapChunkPosition.y, longMap * chunkNum * 2);
             AddEnemyToRandomPosition(map);
+            AttemptAddHealthBox();
         }
     }
 

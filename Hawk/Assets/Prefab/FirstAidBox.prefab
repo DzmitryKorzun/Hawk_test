@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4673089006068426529}
   - component: {fileID: 7439615600418952171}
   - component: {fileID: 8952644275183727167}
+  - component: {fileID: 7913982695391236978}
   m_Layer: 0
   m_Name: FirstAidBox
   m_TagString: Untagged
@@ -26,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8952644275183727166}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -24.055862, y: 17.031021, z: -6.542613}
-  m_LocalScale: {x: 0.75121766, y: 0.75121766, z: 0.75121766}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: -24.055862, y: 17.210234, z: -6.8831}
+  m_LocalScale: {x: 1.3663898, y: 1.3663898, z: 1.3663898}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!33 &4673089006068426529
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -104,3 +105,16 @@ MonoBehaviour:
   rotationSpeed: 1
   rotationVector: {x: 0, y: 0, z: 1}
   transformObj: {fileID: 8608065695046101124}
+--- !u!65 &7913982695391236978
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8952644275183727166}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5000009, y: 0.17995827, z: 0.49865687}
+  m_Center: {x: 0, y: 0.0000003427267, z: -0.24932843}

@@ -8,13 +8,20 @@ public class MedicineChest : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Vector3 rotationVector;
     [SerializeField] private Transform transformObj;
-    [SerializeField] private float percentageChanceOfGeneration;
+
 
     private float healthRegen;
     private int ID_randHealthRegen;
+    private Collider physicalField;
+    private MedicineChestSpawner chestSpawner;
 
     public float HealthRegen => healthRegen;
-    public float PercentageChanceOfGeneration => percentageChanceOfGeneration;
+
+    public void Setup(Collider physicalField, MedicineChestSpawner chestSpawner)
+    {
+        this.physicalField = physicalField;
+        this.chestSpawner = chestSpawner;
+    }
 
     private void OnEnable()
     {
@@ -25,5 +32,14 @@ public class MedicineChest : MonoBehaviour
     private void FixedUpdate()
     {
         transformObj.Rotate(rotationVector * rotationSpeed);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (physicalField.Equals(other))
+        {
+            chestSpawner.AddMedicineChestToQueue(this);
+            this.gameObject.SetActive(false);
+        }
     }
 }
