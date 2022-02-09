@@ -9,19 +9,22 @@ public class MapGenerator : MonoBehaviour, IPauseGame
     [SerializeField] private Vector3 firstMapChunkPosition;
     [SerializeField] private float minRadius;
     [SerializeField] private GameObject scoreController;
+    [SerializeField] private MedicineChest healthBox;
 
     private int chunkNum;
     private float longMap;
     private Queue<MapEngeDetection> mapEngeDetections = new Queue<MapEngeDetection>();
     private PhysicalAreaOfThePlayingField playingField;
     private float playingFieldX;
+    private float minPlayingFieldY;
+    private float maxPlayingFieldY;
 
     private void Awake()
     {
         MapEngeDetection map = Instantiate(mapRef);
         map.transform.position = firstMapChunkPosition;
         map.Setting(this);
-        SizeMapChunkDetermination(map);
+        SizeMapChunkDetermination(map);       
     }
     
     private void SizeMapChunkDetermination(MapEngeDetection map)
@@ -32,16 +35,31 @@ public class MapGenerator : MonoBehaviour, IPauseGame
 
     private void AddEnemyToRandomPosition(MapEngeDetection map)
     {
-        float minPlayingFieldY = map.transform.position.z + longMap - minRadius;
-        float maxPlayingFieldY = map.transform.position.z - longMap + minRadius;
-        Vector3 tmpPos = Vector3.zero;
+        FieldBoundaryDefinition(map);
+        Vector3 pos = Vector3.zero;
         for (int i = 0; i < enemySpawner.GetEnemyTypeCount(); i++)
         {
-            float randPosX = UnityEngine.Random.Range(-playingFieldX + minRadius, playingFieldX - minRadius);
-            float randPosY = UnityEngine.Random.Range(minPlayingFieldY, maxPlayingFieldY);
-            tmpPos = new Vector3(randPosX, 0, randPosY);
-            enemySpawner.AddEnemy(tmpPos, i);
+            pos = GetRandomMapPosition();
+            enemySpawner.AddEnemy(pos, i);
         }
+    }
+
+    private Vector3 GetRandomMapPosition()
+    {
+        float randPosX = UnityEngine.Random.Range(-playingFieldX + minRadius, playingFieldX - minRadius);
+        float randPosY = UnityEngine.Random.Range(minPlayingFieldY, maxPlayingFieldY);
+        return new Vector3(randPosX, 0, randPosY);
+    }
+
+    private void FieldBoundaryDefinition(MapEngeDetection map)
+    {
+        minPlayingFieldY = map.transform.position.z + longMap - minRadius;
+        maxPlayingFieldY = map.transform.position.z - longMap + minRadius;
+    }
+
+    private void AttemptAddHealthBox()
+    {
+
     }
 
     public void Setting(PhysicalAreaOfThePlayingField playingField, EnemySpawner enemySpawner)
@@ -50,7 +68,7 @@ public class MapGenerator : MonoBehaviour, IPauseGame
         this.enemySpawner = enemySpawner;
         playingFieldX = playingField.BorderX;
     }
-
+    
     public void AddNewChunk()
     {
         scoreController.SetActive(true);

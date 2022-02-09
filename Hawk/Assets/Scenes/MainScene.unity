@@ -1090,9 +1090,6 @@ MonoBehaviour:
   scoreNumText: {fileID: 633265411}
   recordNumText: {fileID: 81723486}
   shipModel: {fileID: 772187718}
-  gameObjectsForDeactivation:
-  - {fileID: 1936675755}
-  - {fileID: 1317285816}
 --- !u!114 &580600196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1478,9 +1475,8 @@ MonoBehaviour:
   enemySpawner: {fileID: 282463150608215949}
   firstMapChunkPosition: {x: 0, y: -0.15, z: 0}
   minRadius: 0.5
-  maxNumberAttempts: 0
-  mapImages: []
   scoreController: {fileID: 796118733}
+  healthBox: {fileID: 8952644275183727167, guid: 4996a2dd96231eb49bae517c9ea2c09d, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

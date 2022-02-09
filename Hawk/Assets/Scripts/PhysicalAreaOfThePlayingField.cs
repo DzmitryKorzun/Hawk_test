@@ -21,7 +21,7 @@ public class PhysicalAreaOfThePlayingField : MonoBehaviour, IPauseGame
     {
         if (isPaused)
         {
-            this.enabled = false;
+        //    this.enabled = false;
             Debug.Log(this.enabled);
         }
         else
