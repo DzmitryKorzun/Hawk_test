@@ -668,6 +668,7 @@ MonoBehaviour:
   scoreController: {fileID: 796118734}
   saveManager: {fileID: 1263440210}
   resultPannelController: {fileID: 580600195}
+  medicineChestSpawner: {fileID: 1326503593}
 --- !u!4 &282000638
 Transform:
   m_ObjectHideFlags: 0
@@ -1477,6 +1478,7 @@ MonoBehaviour:
   minRadius: 0.5
   scoreController: {fileID: 796118733}
   healthBox: {fileID: 8952644275183727167, guid: 4996a2dd96231eb49bae517c9ea2c09d, type: 3}
+  medecineChestSpawner: {fileID: 1326503593}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2120,6 +2122,51 @@ MonoBehaviour:
   lastAttemptText: {fileID: 727911446}
   shopPannel: {fileID: 0}
   difficultDropdown: {fileID: 1711874409}
+--- !u!1 &1326503591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1326503592}
+  - component: {fileID: 1326503593}
+  m_Layer: 0
+  m_Name: MedicalChessSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1326503592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326503591}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12.212834, y: 11.923311, z: -1.5279889}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1936675756}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1326503593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326503591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d8644a880ad56428e48f67d38f6dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  refMedicineChest: {fileID: 8952644275183727167, guid: 4996a2dd96231eb49bae517c9ea2c09d, type: 3}
+  percentageChanceOfGeneration: 50
 --- !u!1 &1337353735
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,6 +3087,7 @@ Transform:
   - {fileID: 873849626}
   - {fileID: 796118735}
   - {fileID: 1274877653}
+  - {fileID: 1326503592}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3406,18 +3454,22 @@ MonoBehaviour:
     enemyPrefab: {fileID: 7269532858992619284, guid: 39f946293a246fd43b996a36d8baa005, type: 3}
     health: 20
     destructionPointScore: 3
+    collisionDamage: 50
   - pos: {x: -2, y: 0, z: 3.78}
     enemyPrefab: {fileID: 2642652799375935361, guid: 2442b84e10c4ef344b1d51bad35710f5, type: 3}
     health: 25
     destructionPointScore: 5
+    collisionDamage: 50
   - pos: {x: 1.78, y: 0, z: 0}
     enemyPrefab: {fileID: 2642652799375935361, guid: eb0cea7edaa9bf543851a3a3fa77552c, type: 3}
     health: 30
     destructionPointScore: 10
+    collisionDamage: 50
   - pos: {x: -2, y: 0, z: 0}
     enemyPrefab: {fileID: 7269532858992619284, guid: ab1824ce14a121e41901ca4848069d37, type: 3}
     health: 35
     destructionPointScore: 15
+    collisionDamage: 50
   enemyContainer: {fileID: 1317285817}
 --- !u!4 &282463150608216050
 Transform:

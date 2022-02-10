@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Collider enemyCollider;
     [SerializeField] private MeshRenderer meshRenderer;
 
+
     private int typeId;
     private EnemySpawner enemySpawner;
     private float health;
@@ -17,6 +18,10 @@ public class Enemy : MonoBehaviour
     private int destructionPointScore;
     private bool isGunActive;
     private Collider playingFieldColider;
+    private float collisionDamage;
+
+    public float CollisionDamage => collisionDamage;
+    public float MaxHealth => maxHealth;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -48,7 +53,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Setting(float health, Vector3 startPos, EnemySpawner enemySpawner, ScoreController scoreController, int destructionPointScore, int typeId, PhysicalAreaOfThePlayingField playingField, GameObject bulletsContainers)
+    public void Setting(float health, Vector3 startPos, EnemySpawner enemySpawner, ScoreController scoreController, int destructionPointScore, int typeId, PhysicalAreaOfThePlayingField playingField, GameObject bulletsContainers, float collisionDamage)
     {
         this.health = health;
         this.maxHealth = health;
@@ -58,6 +63,7 @@ public class Enemy : MonoBehaviour
         this.destructionPointScore = destructionPointScore;
         this.typeId = typeId;
         this.playingFieldColider = playingField.gameObject.GetComponent<Collider>();
+        this.collisionDamage = collisionDamage;
         SwitchingGuns(false);
         SetupAllGuns(bulletsContainers);
     }
@@ -97,7 +103,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         this.health = Mathf.Clamp(health - damage, 0, health);
         healthBar.FillImage(health / maxHealth);

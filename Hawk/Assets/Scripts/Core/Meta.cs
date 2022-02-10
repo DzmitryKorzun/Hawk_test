@@ -16,6 +16,7 @@ namespace Core
         [SerializeField] private ScoreController scoreController;
         [SerializeField] private SaveManager saveManager;
         [SerializeField] private ResultPannelController resultPannelController;
+        [SerializeField] private MedicineChestSpawner medicineChestSpawner;
 
         private Game game;
         private List<IPauseGame> pauseGameComponents = new List<IPauseGame>();
@@ -48,7 +49,7 @@ namespace Core
         public void StartGame()
         {
             GameScreen gameScreen = screenController.ShowGameScreen();
-            game.StartGame(gameScreen, characterPrefab, physicalField, enemySpawner, mapGenerator, scoreController, saveManager, resultPannelController);
+            game.StartGame(gameScreen, characterPrefab, physicalField, enemySpawner, mapGenerator, scoreController, saveManager, resultPannelController, medicineChestSpawner);
         }
 
         public void AddPauseGameComponentToList(IPauseGame isPausedComponent)

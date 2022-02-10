@@ -25,7 +25,7 @@ namespace Core
             
         }
 
-        public void StartGame(GameScreen gameScreen, Character person, PhysicalAreaOfThePlayingField field, EnemySpawner enemySpawner, MapGenerator mapGenerator, ScoreController scoreController, SaveManager saveManager, ResultPannelController resultPannelController)
+        public void StartGame(GameScreen gameScreen, Character person, PhysicalAreaOfThePlayingField field, EnemySpawner enemySpawner, MapGenerator mapGenerator, ScoreController scoreController, SaveManager saveManager, ResultPannelController resultPannelController, MedicineChestSpawner medicineChestSpawner)
         {
             bulletsContainers = new GameObject("bulletsContainers");
             resultPannelController.Setup(this, config, bulletsContainers);
@@ -39,6 +39,7 @@ namespace Core
             mapGenerator.Setting(physicalField, enemySpawner);
             scoreController.Setting(config.MapMovementSpeed, saveManager);
             gameScreen.Setting(scoreController);
+            medicineChestSpawner.Setup(physicalField.GetComponent<Collider>());
             meta.AddPauseGameComponentToList(enemySpawner);
             meta.AddPauseGameComponentToList(field);
             meta.AddPauseGameComponentToList(character);

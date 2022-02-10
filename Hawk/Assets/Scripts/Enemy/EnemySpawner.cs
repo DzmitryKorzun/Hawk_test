@@ -10,11 +10,13 @@ public class EnemySpawner : MonoBehaviour, IPauseGame
         [SerializeField] private Enemy enemyPrefab;
         [SerializeField] private float health;
         [SerializeField] private float destructionPointScore;
+        [SerializeField] private float collisionDamage;
 
         public Vector3 StartPos => pos;
         public Enemy EnemyPrefab => enemyPrefab;
         public float Health => health;
         public float DestructionPointScore => destructionPointScore;
+        public float CollisionDamage => collisionDamage;
     }
 
     [SerializeField] private List<EnemyData> enemiesData;
@@ -58,14 +60,14 @@ public class EnemySpawner : MonoBehaviour, IPauseGame
             Enemy enemy = enemiesQueue[id].Dequeue();
             enemy.gameObject.SetActive(true);
             enemy.ReturnHealth();
-            enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)(enemiesData[id].DestructionPointScore * difficultCoefficient), id, playingField, bulletsContainers);
+            enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)(enemiesData[id].DestructionPointScore * difficultCoefficient), id, playingField, bulletsContainers, enemiesData[id].CollisionDamage);
         }
     }
 
     private void CreateEnemy(Vector3 pos, int id)
     {
         Enemy enemy = Instantiate(enemiesData[id].EnemyPrefab, enemyContainer);
-        enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)enemiesData[id].DestructionPointScore, id, playingField, bulletsContainers);
+        enemy.Setting(enemiesData[id].Health * difficultCoefficient, pos, this, scoreController, (int)enemiesData[id].DestructionPointScore, id, playingField, bulletsContainers, enemiesData[id].CollisionDamage);
     }
 
     public void enemiesEnqueue(Enemy enemy, int id)

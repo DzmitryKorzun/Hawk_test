@@ -167,7 +167,7 @@ public class Character : MonoBehaviour, IPauseGame
     {
         foreach (Gun myGun in guns)
         {
-            myGun.enabled = false;
+            myGun.StopFiring();
         }
     }
 
@@ -190,7 +190,16 @@ public class Character : MonoBehaviour, IPauseGame
             if (medicineChest != null)
             {
                 RegenHealth(medicineChest.HealthRegen);
-                medicineChest.gameObject.SetActive(true);
+                medicineChest.gameObject.SetActive(false);
+            }
+            else
+            {
+                Enemy enemy = other.gameObject.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    TakeDamage(enemy.CollisionDamage);
+                    enemy.TakeDamage(enemy.MaxHealth);
+                }
             }
         }
     }
