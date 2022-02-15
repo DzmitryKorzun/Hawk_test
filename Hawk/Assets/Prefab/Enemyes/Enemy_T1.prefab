@@ -210,6 +210,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
+      propertyPath: firingIntensity
+      value: 0.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 3446363120162299828, guid: b75f1a27077f38e47ba24c9cb983e115, type: 3}
       propertyPath: allBullets.Array.size
       value: 0
       objectReference: {fileID: 0}

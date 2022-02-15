@@ -36,7 +36,7 @@ public class Character : MonoBehaviour, IPauseGame
         runtimePlatform = Application.platform;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (runtimePlatform == RuntimePlatform.Android)
         {
@@ -149,7 +149,6 @@ public class Character : MonoBehaviour, IPauseGame
         this.health = Mathf.Clamp(health + heal, 0, maxHealth);
         healthBar.FillImage(health / maxHealth);
     }
-
 
     private void SetupAllGuns(GameObject bulletsContainers)
     {
