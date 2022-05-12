@@ -211,7 +211,7 @@ public class Character : MonoBehaviour, IPauseGame
         }
         else
         {
-
+            
         }
     }
 }

@@ -14,6 +14,7 @@ public class PhysicalAreaOfThePlayingField : MonoBehaviour, IPauseGame
     private Vector2 min;
     private Vector2 max;
     private Camera cam;
+    private float savedMoveSpeed;
 
     public float BorderX => borderX;
 
@@ -21,11 +22,11 @@ public class PhysicalAreaOfThePlayingField : MonoBehaviour, IPauseGame
     {
         if (isPaused)
         {
-        //    this.enabled = false;
+            this.enabled = false;
         }
         else
         {
-          //  moveSpeed = tmpMoveSpeedCash;
+            moveSpeed = savedMoveSpeed;
         }
     }
 

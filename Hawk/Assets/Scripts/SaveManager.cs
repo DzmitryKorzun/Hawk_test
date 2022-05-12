@@ -4,10 +4,11 @@ using System;
 public enum savePoint
 {
     lastRace,
-    maxScore
+    maxScore,
+    isSession
 }
 
-public class SaveManager : MonoBehaviour
+public class SaveManager: MonoBehaviour
 {
     private object value;
 

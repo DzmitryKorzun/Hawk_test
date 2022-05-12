@@ -12,22 +12,27 @@ public class ResultPannelController : MonoBehaviour
     [SerializeField] private Text recordNumText;
     [SerializeField] private Transform shipModel;
 
+    private IMeta meta;
     private Game game;
     private GameConfig gameConfig;
+    private SaveManager saveManager;
 
     private void Start()
     {
         reloadGameButton.onClick.AddListener(RealoadLevel);
     }
 
-    public void Setup(Game game, GameConfig gameConfig, GameObject bulletsContainers)
+    public void Setup(IMeta meta, Game game, SaveManager saveManager, GameConfig gameConfig, GameObject bulletsContainers)
     {
-        this.game = game;
+        this.meta = meta;
         this.gameConfig = gameConfig;
+        this.saveManager = saveManager;
+        this.game = game;
     }
 
     private void RealoadLevel()
     {
+        saveManager.SetValue(savePoint.isSession, 1);
         game.FinishGame();
     }
 
@@ -38,14 +43,13 @@ public class ResultPannelController : MonoBehaviour
 
     private void OnEnable()
     {
-        game.PauseGame(true);
         scoreNumText.text = scoreController.Score.ToString();
         recordNumText.text = scoreController.MaxScore.ToString();
     }
 
-    private void OnDisable()
+    private void OnApplicationQuit()
     {
-        game.PauseGame(false);
+        saveManager.SetValue(savePoint.isSession, 0);
     }
 }
 

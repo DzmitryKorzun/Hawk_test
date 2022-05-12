@@ -29,6 +29,7 @@ public class MenuScreen : MonoBehaviour
         maxScore.text = string.Concat("Record: ", saveManager.GetValue<int>(savePoint.maxScore));
         lastAttemptText.text = string.Concat("Last attempt: ", saveManager.GetValue<int>(savePoint.lastRace));
         playButton.onClick.AddListener(GameStartEvent);
+        if (saveManager.GetValue<int>(savePoint.isSession) == 1) GameStartEvent();
     }
 
     private void GameStartEvent()
